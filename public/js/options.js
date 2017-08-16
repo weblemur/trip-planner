@@ -22,9 +22,12 @@ $(function () {
   // ~~~~~~~~~~~~~~~~~~~~~~~
 
     // make all the option tags (second arg of `forEach` is a `this` binding)
-    hotels.forEach(makeOption, $hotelSelect);
-    restaurants.forEach(makeOption, $restaurantSelect);
-    activities.forEach(makeOption, $activitySelect);
+    $.get('/api/options')
+    .then(opts => {
+        opts.hotels.forEach(makeOption, $hotelSelect);
+        opts.restaurants.forEach(makeOption, $restaurantSelect);
+        opts.activities.forEach(makeOption, $activitySelect);
+    }).catch(err => console.error(err));
 
     // Once you've made AJAX calls to retrieve this information,
     // call attractions.loadEnhancedAttractions in the fashion
