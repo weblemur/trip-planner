@@ -108,10 +108,18 @@ var dayModule = (function () {
         .catch(err => console.error(err));
         break;
       case 'restaurant':
-        utilsModule.pushUnique(this.restaurants, attraction);
+      $.post(`/api/days/${this.id}/restaurants`, {restaurantId: attraction.id})
+          .then(() => {
+            utilsModule.pushUnique(this.restaurants, attraction);
+          })
+          .catch(err => console.error(err));
         break;
       case 'activity':
-        utilsModule.pushUnique(this.activities, attraction);
+        $.post(`/api/days/${this.id}/activities`, { activityId: attraction.id })
+          .then(() => {
+            utilsModule.pushUnique(this.restaurants, attraction);
+          })
+          .catch(err => console.error(err));
         break;
       default: console.error('bad type:', attraction);
     }
@@ -126,15 +134,28 @@ var dayModule = (function () {
   // ~~~~~~~~~~~~~~~~~~~~~~~
   Day.prototype.removeAttraction = function (attraction) {
     // removing from the day object
+    let settings = { method: 'PUT' };
     switch (attraction.type) {
       case 'hotel':
-        this.hotel = null;
+        settings.data = { hotelId: attraction.id };
+        $.ajax(`/api/days/${this.id}/hotel`, settings).then(() => {
+          this.hotel = null;
+        })
+          .catch(err => console.error(err));
         break;
       case 'restaurant':
-        utilsModule.remove(this.restaurants, attraction);
+        settings.data = { restaurantId: attraction.id };
+        $.ajax(`/api/days/${this.id}/restaurants`, settings).then(() => {
+          utilsModule.remove(this.restaurants, attraction);
+        })
+          .catch(err => console.error(err));
         break;
       case 'activity':
-        utilsModule.remove(this.activities, attraction);
+        settings.data = { activityId: attraction.id };
+        $.ajax(`/api/days/${this.id}/activities`, settings).then(() => {
+          utilsModule.remove(this.activities, attraction);
+        })
+          .catch(err => console.error(err));
         break;
       default: console.error('bad type:', attraction);
     }

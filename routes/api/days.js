@@ -49,10 +49,50 @@ router.get('/:id/hotel', function(req, res, next) {
   .catch(next);
 });
 
+router.put('/:id/activities', function(req, res, next) {
+  req.day.removeActivity(req.body.activityId)
+  .then(day => {
+    res.sendStatus(200);
+  })
+  .catch(next);
+});
+
+router.put('/:id/restaurants', function(req, res, next) {
+  req.day.removeRestaurant(req.body.restaurantId)
+  .then(day => {
+    res.sendStatus(200);
+  })
+  .catch(next);
+});
+
+router.put('/:id/hotel', function(req, res, next) {
+  req.day.setHotel(null)
+  .then(day => {
+    res.sendStatus(200);
+  })
+  .catch(next);
+});
+
+
+router.post('/:id/activities', function(req, res, next) {
+  req.day.addActivity(req.body.activityId)
+  .then(day => {
+    res.sendStatus(200);
+  })
+  .catch(next);
+});
+
+router.post('/:id/restaurants', function(req, res, next) {
+  req.day.addRestaurant(req.body.restaurantId)
+  .then(day => {
+    res.sendStatus(200);
+  })
+  .catch(next);
+});
+
 router.post('/:id/hotel', function(req, res, next) {
   req.day.setHotel(req.body.hotelId)
   .then(day => {
-    console.log(req.body, day);
     res.sendStatus(200);
   })
   .catch(next);

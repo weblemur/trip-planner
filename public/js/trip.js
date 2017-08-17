@@ -109,13 +109,10 @@ var tripModule = (function () {
       $.get('/api/days')
       .then( days => {
         days.forEach( day =>{
-          console.log(day);
           addDay(day);
         });
       })
       .catch(err => { console.error(err) });
-
-      // $(addDay);
     },
 
     switchTo: switchTo,
