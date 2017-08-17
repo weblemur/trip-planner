@@ -14,7 +14,7 @@ router.param('id', function(req, res, next, id) {
 });
 
 router.get('/', function(req, res, next) {
-  Day.findAll()
+  Day.findAll({ order: [['number', 'ASC']]})
   .then(function(days) {
     res.json(days);
   })

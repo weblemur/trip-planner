@@ -51,8 +51,10 @@ var tripModule = (function () {
       .catch( err => {console.error(err)});
     });
     $removeButton.on('click', () => {
-      // AJAX to delete Day here
-      deleteCurrentDay();
+      // console.log(currentDay);
+      $.ajax('/api/days/' + currentDay.id, { method: 'DELETE' })
+      .then(() => deleteCurrentDay())
+      .catch(err => console.error(err));
     })
   });
 

@@ -7,6 +7,15 @@ var Activity = require('./activity');
 
 var Day = db.define('day', {
   number: Sequelize.INTEGER
+}, {
+  hooks: {
+    afterDestroy: (instance, opts) => {
+      return Day.findAll({ where: { number: { $gt: instance.number } } })
+      .then(days => {
+        return Promise.all(days.map(day => day.update({ number: day.number - 1 })));
+      });
+    }
+  }
 });
 
 Day.belongsTo(Hotel);
