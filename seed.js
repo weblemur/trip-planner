@@ -7,6 +7,7 @@ var Place = require('./models').Place;
 var Hotel = require('./models').Hotel;
 var Restaurant = require('./models').Restaurant;
 var Activity = require('./models').Activity;
+var Day = require('./models').Day;
 
 var data = {
   hotel: [
@@ -73,6 +74,9 @@ db.sync({force: true})
       });
     });
   });
+})
+.then( () => {
+  return Day.bulkCreate([{number: 1}, {number: 2}, {number: 3}]);
 })
 .then(function () {
   console.log("Finished inserting data");

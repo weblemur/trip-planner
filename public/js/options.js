@@ -8,7 +8,7 @@
  * that attraction's id. Selecting an option looks up the attraction by id,
  * then tells the trip module to add the attraction.
  */
- 
+
 $(function () {
 
     // jQuery selects
@@ -27,15 +27,16 @@ $(function () {
         opts.hotels.forEach(makeOption, $hotelSelect);
         opts.restaurants.forEach(makeOption, $restaurantSelect);
         opts.activities.forEach(makeOption, $activitySelect);
+
+        attractionsModule.loadEnhancedAttractions('hotels', opts.hotels);
+        attractionsModule.loadEnhancedAttractions('restaurants', opts.restaurants);
+        attractionsModule.loadEnhancedAttractions('activities', opts.activities);
+
     }).catch(err => console.error(err));
 
     // Once you've made AJAX calls to retrieve this information,
     // call attractions.loadEnhancedAttractions in the fashion
     // exampled below in order to integrate it.
-    attractionsModule.loadEnhancedAttractions('hotels', hotels);
-    attractionsModule.loadEnhancedAttractions('restaurants', restaurants);
-    attractionsModule.loadEnhancedAttractions('activities', activities);
-
     function makeOption(databaseAttraction) {
         var $option = $('<option></option>') // makes a new option tag
           .text(databaseAttraction.name)

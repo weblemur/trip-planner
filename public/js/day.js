@@ -25,7 +25,7 @@ var dayModule = (function () {
 
   // ~~~~~~~~~~~~~~~~~~~~~~~
     // If you follow the logic of `attractionsModule.getEnhanced` (try following it!), you will note that it depends on `loadEnhanceAttractions` to have run.
-    //Note that `loadEnhancedAttractions` is already being called for you in `/public/js/options.js` and that it utilizes another method given to us by the `attractionModule` (singular). 
+    //Note that `loadEnhancedAttractions` is already being called for you in `/public/js/options.js` and that it utilizes another method given to us by the `attractionModule` (singular).
   // ~~~~~~~~~~~~~~~~~~~~~~~
   function Day (data) {
     // for brand-new days
@@ -74,6 +74,7 @@ var dayModule = (function () {
     // day UI
     this.$button.addClass('current-day');
     $dayTitle.text('Day ' + this.number);
+    // $dayTitle.text('Day ' + days.indexOf(this) + 1);
     // attractions UI
     function show (attraction) { attraction.show(); }
     if (this.hotel) show(this.hotel);
