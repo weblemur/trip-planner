@@ -108,16 +108,19 @@ var dayModule = (function () {
         .catch(err => console.error(err));
         break;
       case 'restaurant':
-      $.post(`/api/days/${this.id}/restaurants`, {restaurantId: attraction.id})
+          if (this.restaurants.indexOf(attraction) > -1) break;
+          $.post(`/api/days/${this.id}/restaurants`, {restaurantId: attraction.id})
           .then(() => {
             utilsModule.pushUnique(this.restaurants, attraction);
           })
           .catch(err => console.error(err));
         break;
       case 'activity':
+        if (this.activities.indexOf(attraction) > -1) break;
         $.post(`/api/days/${this.id}/activities`, { activityId: attraction.id })
           .then(() => {
-            utilsModule.pushUnique(this.restaurants, attraction);
+            console.log(this);
+            utilsModule.pushUnique(this.activities, attraction);
           })
           .catch(err => console.error(err));
         break;
