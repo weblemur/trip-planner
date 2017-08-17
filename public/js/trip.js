@@ -106,11 +106,14 @@ var tripModule = (function () {
         //If we are trying to load existing Days, then let's make a request to the server for the day. Remember this is async. For each day we get back what do we need to do to it?
       // ~~~~~~~~~~~~~~~~~~~~~~~
 
-      $.get('/api/days').then( days => {
+      $.get('/api/days')
+      .then( days => {
         days.forEach( day =>{
+          console.log(day);
           addDay(day);
-        })
+        });
       })
+      .catch(err => { console.error(err) });
 
       // $(addDay);
     },

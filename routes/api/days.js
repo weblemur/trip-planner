@@ -1,8 +1,8 @@
 var Promise = require('bluebird');
 var router = require('express').Router();
-// var Hotel = require('../../models').Hotel;
-// var Restaurant = require('../../models').Restaurant;
-// var Activity = require('../../models').Activity;
+var Hotel = require('../../models').Hotel;
+var Restaurant = require('../../models').Restaurant;
+var Activity = require('../../models').Activity;
 var Day = require('../../models').Day;
 
 router.param('id', function(req, res, next, id) {
@@ -14,7 +14,7 @@ router.param('id', function(req, res, next, id) {
 });
 
 router.get('/', function(req, res, next) {
-  Day.findAll({ order: [['number', 'ASC']]})
+  Day.findAll({ include: [ Hotel, Restaurant, Activity ], order: [['number', 'ASC']]})
   .then(function(days) {
     res.json(days);
   })
@@ -36,7 +36,7 @@ router.post('/', function(req, res, next) {
 router.delete('/:id', function(req, res, next) {
   req.day.destroy()
   .then(() => {
-    res.sendStatus(202);
+    res.sendStatus(204);
   })
   .catch(next);
 });
@@ -50,10 +50,10 @@ router.get('/:id/hotel', function(req, res, next) {
 });
 
 router.post('/:id/hotel', function(req, res, next) {
-  // PLACEHOLDER //
-  req.day.getHotel()
-  .then(hotel => {
-    res.json({ data: req.body, hotel });
+  req.day.setHotel(req.body.hotelId)
+  .then(day => {
+    console.log(req.body, day);
+    res.sendStatus(200);
   })
   .catch(next);
 });

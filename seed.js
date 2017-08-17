@@ -76,7 +76,16 @@ db.sync({force: true})
   });
 })
 .then( () => {
-  return Day.bulkCreate([{number: 1}, {number: 2}, {number: 3}]);
+  return Day.bulkCreate([{number: 1}, {number: 2}, {number: 3}], { individualHooks: true });
+})
+.then(days => {
+  return Promise.all(days.map(day => {
+    return Promise.all([
+      day.setHotel(day.id),
+      day.addRestaurant(day.id),
+      day.addActivity(day.id)
+      ]);
+  }));
 })
 .then(function () {
   console.log("Finished inserting data");
